@@ -18,6 +18,8 @@ services:
     secrets:
       - db_root_password
       - db_password
+    networks:
+      - app-network
 
   app:
     build: .
@@ -27,9 +29,11 @@ services:
     volumes:
       - ./src:/var/www/html
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - mysql
+    networks:
+      - app-network
 
 secrets:
   db_root_password:
@@ -41,4 +45,8 @@ volumes:
   mysql-data:
 
 networks:
-  default:
+  app-network:
+    driver: bridge
+    name: app-network
+    external: true
+
