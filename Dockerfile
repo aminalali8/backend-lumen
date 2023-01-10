@@ -74,9 +74,11 @@ RUN mkdir -p /var/log/supervisor
 ADD resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 #------------- Container Config ---------------------------------------------------------------
+COPY scripts/init.sh /scripts/init.sh
+RUN chmod +x /scripts/init.sh
 
 # Expose port 80
 EXPOSE 80
 
 # Set supervisor to manage container processes
-ENTRYPOINT ["/usr/bin/supervisord"]
+ENTRYPOINT ["/scripts/init.sh"]
