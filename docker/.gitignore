@@ -1,5 +1,4 @@
-/db_password.txt
-/db_root_password.txt
-/src/
+db_password.txt
+db_root_password.txt
 .DS_Store
 *.zip
