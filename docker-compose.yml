@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  mysql:  
+  mysql:
     image: mysql:8.0
     container_name: mysql
     hostname: mysql
@@ -27,7 +27,7 @@ services:
     hostname: app
     restart: unless-stopped
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
     ports:
       - "8080:80"
     depends_on:
@@ -37,9 +37,9 @@ services:
 
 secrets:
   db_root_password:
-    file: db_root_password.txt
+    file: docker/db_root_password.txt
   db_password:
-    file: db_password.txt
+    file: docker/db_password.txt
 
 volumes:
   mysql-data:

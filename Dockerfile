@@ -7,7 +7,7 @@
 # Pull base image
 FROM ubuntu:18.04
 
-# Install common tools 
+# Install common tools
 RUN apt-get update
 RUN apt-get install -y wget curl nano htop git unzip bzip2 software-properties-common locales
 
@@ -21,8 +21,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Set working directory
 WORKDIR /var/www/html
 
-# Set up locales 
-# RUN locale-gen 
+# Set up locales
+# RUN locale-gen
 
 #------------- Application Specific Stuff ----------------------------------------------------
 
@@ -41,12 +41,12 @@ RUN apt-get install -y \
 
 # Install NPM and Node.js
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs 
+RUN apt-get install -y nodejs
 
 #------------- FPM & Nginx configuration ----------------------------------------------------
 
 # Config fpm to use TCP instead of unix socket
-ADD resources/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+ADD docker/resources/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 RUN mkdir -p /var/run/php
 
 # Install Nginx
@@ -58,8 +58,8 @@ RUN apt-get update
 
 RUN apt-get install -y nginx
 
-ADD resources/default /etc/nginx/sites-enabled/
-ADD resources/nginx.conf /etc/nginx/
+ADD docker/resources/default /etc/nginx/sites-enabled/
+ADD docker/resources/nginx.conf /etc/nginx/
 
 #------------- Composer & laravel configuration ----------------------------------------------------
 
@@ -71,10 +71,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Install supervisor
 RUN apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
-ADD resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD docker/resources/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 #------------- Container Config ---------------------------------------------------------------
-COPY scripts/init.sh /scripts/init.sh
+COPY docker/scripts/init.sh /scripts/init.sh
 RUN chmod +x /scripts/init.sh
 
 # Expose port 80
